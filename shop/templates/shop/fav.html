@@ -1,0 +1,80 @@
+{% extends 'shop/layouts/main.html' %}
+{% block title %}
+  Favorite Items | ShopKart
+{% endblock title %}
+
+{% block content %}
+  <section class="py-5" style="background-color: #f8f9fa;">
+    <div class="container">
+      <!-- Header -->
+      <div class="row mb-4">
+        <div class="col-12 text-center">
+          <h2 class="fw-bold text-primary">Your Favorite Items</h2>
+          <p class="text-muted">Browse your favorite products and manage your saved items.</p>
+          <!-- <hr class="mb-0 mt-2" style="width: 60px; border-top: 3px solid #007bff;"> -->
+        </div>
+      </div>
+      
+      <!-- Favorites Table -->
+      <div class="table-responsive">
+        <table class="table table-hover align-middle text-center bg-white rounded shadow-sm">
+          <thead class="table-primary">
+            <tr>
+              <th>Image</th>
+              <th>Product Name</th>
+              <th>Price</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in fav %}
+            <tr>
+              <td>
+                <img src="{{ item.product.product_image.url }}" class="rounded" style="width: 75px; height: 75px; object-fit: cover;" alt="{{ item.product.name }}">
+              </td>
+              <td class="fw-bold">{{ item.product.name }}</td>
+              <td class="text-success fs-5">€{{ item.product.selling_price|floatformat:2 }}</td>
+              <td>
+                <a href="{% url 'remove_fav' item.id %}" onclick="return confirm('Are you sure you want to remove this item?')" class="btn btn-outline-danger btn-sm">
+                  <i class="fas fa-trash-alt"></i> Remove
+                </a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="4" class="text-center text-muted py-4">
+                <h5>No items in your favorites list.</h5>
+                <p>Start exploring our collections and add items to your favorites.</p>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+{% endblock content %}
+
+{% block styles %}
+<style>
+  /* Styling for favorite items page */
+  .table thead th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+  }
+  .table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  .btn-outline-danger {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+  }
+  .fw-bold {
+    font-weight: 600;
+  }
+</style>
+{% endblock styles %}

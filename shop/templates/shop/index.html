@@ -1,0 +1,181 @@
+{% extends 'shop/layouts/main.html' %}
+{% block title %}
+ShopKart | Your Ultimate Shopping Experience
+{% endblock title %}
+
+{% block content %}
+{% include 'shop/inc/slider.html' %}
+
+
+
+<!-- Latest Offers Section -->
+<div class="container mt-5" id="latest-offers">
+    <div class="section-header text-center mb-5">
+        <h2 class="fw-bold text-dark">Latest Offers</h2>
+    </div>
+    <div class="row">
+        {% for item in products %}
+        <div class="col-md-4 col-lg-3 col-sm-6 mb-4">
+            <div class="card product-card shadow-sm border-0">
+                <div class="product-image-container position-relative">
+                    <img src="{{ item.product_image.url }}" class="card-img-top" alt="{{ item.name }}">
+                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">Sale</span>
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="card-title text-dark">{{ item.name }}</h5>
+                    <p class="card-text text-muted">{{ item.category.name }}</p>
+                    <p class="price">
+                        <span class="text-decoration-line-through text-muted">€{{ item.original_price|floatformat:2 }}</span>
+                        <span class="fw-bold text-danger">€{{ item.selling_price|floatformat:2 }}</span>
+                    </p>
+                    <a href="{% url 'product_details' item.category.name item.name %}" class="btn btn-primary w-100">Shop Now</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-center">No latest offers available at the moment.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"></script>
+<script>
+    // Hover effect for cards and images
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('mouseover', () => {
+            card.style.transform = 'scale(1.05)';
+        });
+        card.addEventListener('mouseout', () => {
+            card.style.transform = 'scale(1)';
+        });
+    });
+    
+    document.querySelectorAll('.card-img-top').forEach(img => {
+        img.addEventListener('mouseover', () => {
+            img.style.transform = 'scale(1.1)';
+        });
+        img.addEventListener('mouseout', () => {
+            img.style.transform = 'scale(1)';
+        });
+    });
+</script>
+    <!-- document.addEventListener("DOMContentLoaded", function() {
+        const swiper = new Swiper('.hero-slider', {
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            effect: 'fade',
+        });
+    });
+    
+</script> -->
+{% endblock scripts %}
+
+{% block styles %}
+<style>
+/* Fullscreen Hero Section */
+.hero-section {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -1;
+}
+.hero-section .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.slider-caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 5px;
+}
+.slider-caption h2 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.slider-caption p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+.slider-caption .btn {
+    background-color: #ff6f61;
+    border: none;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+.slider-caption .btn:hover {
+    background-color: #e65a50;
+}
+
+/* Product Card Styling */
+.product-card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+.product-image-container {
+    position: relative;
+    overflow: hidden;
+}
+.product-image-container img {
+    width: 100%;
+    height: 120px;        /* Smaller image height */
+    object-fit: cover;    /* Crop and maintain aspect ratio */
+}
+.product-card:hover .product-image-container img {
+    transform: scale(1.1);
+    transition: transform 0.5s ease;
+}
+.price {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* Swiper Controls */
+.swiper-button-next,
+.swiper-button-prev {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    padding: 10px;
+    font-size: 1.5rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        height: 400px;
+    }
+    .slider-caption h2 {
+        font-size: 2rem;
+    }
+    .product-image-container img {
+        height: 100px;      /* Even smaller image height on mobile */
+    }
+}
+</style>
+{% endblock styles %}

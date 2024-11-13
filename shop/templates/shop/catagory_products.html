@@ -1,0 +1,83 @@
+{% extends 'shop/layouts/main.html' %}
+
+{% block title %}
+  {{ catagory.name }} | ShopKart
+{% endblock title %}
+
+{% block content %}
+  <div class="container mt-5" id="electronics-collection">
+    <!-- Category Header -->
+    <div class="row mb-4">
+      <div class="col-12 text-center">
+        <h2 class="fw-bold text-primary">{{ catagory.name }} Collection</h2>
+        <p class="text-muted">Explore our collection of amazing products.</p>
+      </div>
+    </div>
+
+    <!-- Trending Products -->
+    <div class="row mb-4">
+      <div class="col-12 text-center">
+        <h3 class="fw-bold text-danger">Trending Products</h3>
+        <p class="text-muted">Products that are currently trending in {{ catagory.name }} category.</p>
+      </div>
+    </div>
+
+    <div class="row">
+        {% for item in trending_products %}
+        <div class="col-md-4 col-lg-3 col-sm-6 mb-4 product-card-wrapper">
+            <div class="card product-card shadow-sm border-0">
+                <div class="product-image-container position-relative">
+                    <img src="{{ item.product_image.url }}" class="card-img-top product-image" alt="{{ item.name }}">
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="card-title text-dark">{{ item.name }}</h5>
+                    <p class="card-text text-muted">{{ item.catagory.name }}</p>
+                    <p class="price">
+                        <span class="text-decoration-line-through text-muted">€{{ item.original_price|floatformat:2 }}</span>
+                        <span class="fw-bold text-danger">€{{ item.selling_price|floatformat:2 }}</span>
+                    </p>
+                    <a href="{% url 'product_details' item.catagory.name item.name %}" class="btn btn-primary w-100">Shop Now</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p>No trending products found in this category.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- All Products -->
+    <div class="row mb-4">
+      <div class="col-12 text-center">
+        <h3 class="fw-bold text-primary">All Products</h3>
+        <p class="text-muted">Browse through all the products in {{ catagory.name }} category.</p>
+      </div>
+    </div>
+
+    <div class="row">
+        {% for item in products %}
+        <div class="col-md-4 col-lg-3 col-sm-6 mb-4 product-card-wrapper">
+            <div class="card product-card shadow-sm border-0">
+                <div class="product-image-container position-relative">
+                    <img src="{{ item.product_image.url }}" class="card-img-top product-image" alt="{{ item.name }}">
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="card-title text-dark">{{ item.name }}</h5>
+                    <p class="card-text text-muted">{{ item.catagory.name }}</p>
+                    <p class="price">
+                        <span class="text-decoration-line-through text-muted">€{{ item.original_price|floatformat:2 }}</span>
+                        <span class="fw-bold text-danger">€{{ item.selling_price|floatformat:2 }}</span>
+                    </p>
+                    <a href="{% url 'product_details' item.catagory.name item.name %}" class="btn btn-primary w-100">Shop Now</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p>No products found in this category.</p>
+        </div>
+        {% endfor %}
+    </div>
+  </div>
+{% endblock content %}

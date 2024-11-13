@@ -1,0 +1,14 @@
+{% extends 'shop/layouts/main.html' %}
+{% block title %}
+  Payment Successful | ShopKart
+{% endblock title %}
+{% block content %}
+  <section class="bg-light py-4 my-5">
+    <div class="container">
+      <h4 class="mb-3">Payment Successful!</h4>
+      <hr style="border-color:#b8bfc2;">
+      <p>Your payment was successful. Thank you for your purchase!</p>
+      <a href="{% url 'home' %}" class="btn btn-primary">Return to Home</a>
+    </div>
+  </section>
+{% endblock content %}

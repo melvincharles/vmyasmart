@@ -1,0 +1,208 @@
+{% extends 'shop/layouts/main.html' %}
+{% load static %} <!-- Load static files -->
+{% block title %}
+  Payment Details | SYAM MART
+{% endblock title %}
+
+{% block content %}
+<section class="payment-section py-4 my-5">
+  <div class="container">
+    <!-- Company Name Centered -->
+    <h2 class="text-center text-primary mb-4">SYAM MART</h2>
+    <hr style="border-color:#0ba0df;">
+    
+    <div class="row">
+      <!-- Left Side - Customer Delivery Information (Blue Background) -->
+      <div class="col-md-6 payment-left">
+        <a href="https://www.paypal.com/checkout" target="_blank">
+          <img src="{% static 'images/paypal1-logo.jpg' %}" alt="PayPal" width="100" height="60"> 
+        </a>
+        
+        <a href="https://www.commerzbank.de">
+          <img src="{% static 'images/bank-transfer-logo.png' %}" alt="Bank Transfer" width="100" height="60">
+        </a>
+
+        <p>Register or Login to save your details for future purchases.</p>
+        <label for="email" class="form-label">E-mail</label>
+        <input type="email" class="form-control mb-3" id="email" placeholder="Enter your email" required>
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" id="news" name="news">
+          <label class="form-check-label" for="news">Receive news and offers via email</label>
+        </div>
+
+        <h5>Customer Delivery</h5>
+        <label for="country" class="form-label">Country</label>
+        <select class="form-select mb-3" id="country">
+          <option>Germany</option>
+          <!-- Add more countries as needed -->
+        </select>
+
+        <div class="form-inline">
+          <label for="first_name" class="form-label">First Name</label>
+          <input type="text" class="form-control mb-3 mr-2" id="first_name" placeholder="Enter first name" required>
+
+          <label for="last_name" class="form-label">Last Name</label>
+          <input type="text" class="form-control mb-3" id="last_name" placeholder="Enter last name" required>
+        </div>
+
+        <label for="address" class="form-label">Street Address</label>
+        <input type="text" class="form-control mb-3" id="address" placeholder="Enter your street address" required>
+
+        <label for="zip" class="form-label">Postal Code</label>
+        <input type="text" class="form-control mb-3" id="zip" placeholder="Postal Code" required>
+
+        <label for="city" class="form-label">City</label>
+        <input type="text" class="form-control mb-2" id="city" placeholder="City" required>
+
+        <h5>Shipment</h5>
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="radio" name="shipping" id="dpd" checked>
+          <label class="form-check-label" for="dpd">DPD: Shipping in 2-3 working days (Free)</label>
+        </div>
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="radio" name="shipping" id="dhl">
+          <label class="form-check-label" for="dhl">DHL Express: Shipping in 24-36 hours (€2.99)</label>
+        </div>
+      </div>
+
+      <!-- Right Side - Payment Form (Green Background) -->
+      <div class="col-md-5 payment-right">
+        <form method="POST" action="{% url 'process_payment' %}">
+          {% csrf_token %}
+          <div class="mt-4 text-center">
+            <img src="{% static 'images/mastercard-logo.png' %}" alt="MasterCard" width="100" height="60">
+            <img src="{% static 'images/amex-logo.avif' %}" alt="American Express" width="100" height="60">
+            <img src="{% static 'images/visaCard.png' %}" alt="VisaCard" width="100" height="60">
+            <img src="{% static 'images/deutsch.png' %}" alt="VisaCard" width="110" height="70">
+          </div>
+          <h5 class="mb-3">Credit Card Details</h5>
+          <div class="mb-3">
+            <label for="card_number" class="form-label">Card Number</label>
+            <input type="text" class="form-control" id="card_number" name="card_number" placeholder="Enter your card number" required>
+          </div>
+          <div class="mb-3">
+            <label for="expiry_date" class="form-label">Expiry Date</label>
+            <input type="text" class="form-control" id="expiry_date" name="expiry_date" placeholder="MM/YY" required>
+          </div>
+          <div class="mb-3">
+            <label for="cvv" class="form-label">CVV</label>
+            <input type="text" class="form-control" id="cvv" name="cvv" placeholder="Enter your CVV" required>
+          </div>
+          <div class="mb-3">
+            <label for="amount" class="form-label">Total Amount</label>
+            <input type="text" class="form-control" id="amount" name="amount" value="{{ total_amount }}" readonly>
+          </div>
+          <button type="submit" class="btn btn-success w-100">Confirm Payment</button>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
+
+{% block styles %}
+<style>
+  .payment-section {
+    background-color: #f4f4f4;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeSlideUp 1s ease-out forwards;
+  }
+
+  @keyframes fadeSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .payment-section.animate {
+    animation: fadeSlideUp 1s ease-out forwards;
+  }
+
+  h2.text-center {
+    font-family: 'Arial', sans-serif;
+    font-size: 36px;
+    font-weight: bold;
+    color: #3797c0;
+  }
+
+  .payment-left {
+    background-color: #3797c0;
+    padding: 150px;
+    border-radius: 140px;
+    color: white;
+  }
+
+  .payment-right {
+    background-color: #28a745;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+  }
+
+  .form-inline {
+    display: flex;
+    gap: 20px;
+  }
+
+  .form-inline .form-control {
+    display: inline-block;
+    width: 48%;
+  }
+
+  .form-label {
+    font-weight: bold;
+    color: white;
+  }
+
+  .btn-success {
+    background-color: #218838;
+    border-color: #218838;
+  }
+
+  .btn-success:hover {
+    background-color: #1e7e34;
+    border-color: #1e7e34;
+  }
+
+  .mt-4 img {
+    margin: 0 10px;
+  }
+
+  @media (max-width: 768px) {
+    .col-md-6, .col-md-5 {
+      margin-bottom: 20px;
+    }
+
+    .form-inline .form-control {
+      width: 100%;
+    }
+  }
+</style>
+{% endblock styles %}
+
+{% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const section = document.querySelector(".payment-section");
+
+    function animateOnScroll() {
+      const sectionTop = section.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+
+      if (sectionTop < windowHeight) {
+        section.classList.add("animate");
+      }
+    }
+
+    window.addEventListener("scroll", animateOnScroll);
+    window.addEventListener("load", animateOnScroll);
+  });
+</script>
+{% endblock scripts %}

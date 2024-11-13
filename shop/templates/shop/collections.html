@@ -1,0 +1,167 @@
+{% extends 'shop/layouts/main.html' %}
+
+{% block title %}
+  Registration | ShopKart
+{% endblock title %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-5 text-center" style="margin-top:70px; background: linear-gradient(120deg, #4a90e2, #56d9fe); color: white;">
+  <div class="container">
+    <div class="row py-lg-5">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <h1 class="fw-bold animate__animated animate__fadeIn animate__delay-1s">Explore Bestsellers</h1>
+        <p class="lead text-light animate__animated animate__fadeIn animate__delay-2s">Discover our most popular products, updated hourly to bring you the latest in-demand items.</p>
+        <p class="mt-4">
+          <a href="{% url 'login' %}" class="btn btn-light btn-lg mx-2 animate__animated animate__fadeIn animate__delay-3s">Already a User? Login</a>
+          <a href="{% url 'register' %}" class="btn btn-outline-light btn-lg mx-2 animate__animated animate__fadeIn animate__delay-4s">New Here? Register</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Categories Section -->
+<section class="bg-light py-5">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col text-center">
+        <h2 class="fw-bold text-primary animate__animated animate__fadeIn">Shop by Category</h2>
+        <p class="text-muted animate__animated animate__fadeIn">Explore our wide range of product categories tailored just for you.</p>
+        <hr style="border-color:#b8bfc2; width: 60px; margin: 0 auto;">
+      </div>
+    </div>
+    
+    <div class="row">
+      {% for item in catagory %}
+      <div class="col-md-4 col-lg-3 d-flex align-items-stretch mb-4">
+        <div class="card shadow-sm border-0 rounded" style="overflow: hidden; transition: transform 0.3s ease;">
+          <a href="{% url 'collections' item.name %}" style="text-decoration: none; color: inherit;">
+            <img src="{{item.image.url}}" class="card-img-top" alt="{{ item.name }}" style="height: 200px; object-fit: cover; transition: transform 0.5s ease;">
+            <div class="card-body text-center">
+              <h5 class="card-title text-primary fw-bold">{{ item.name }}</h5>
+              <p class="card-text text-muted">{{ item.description }}</p>
+              <button class="btn btn-outline-primary btn-sm">Explore {{ item.name }}</button>
+            </div>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"></script>
+<script>
+    // Hover effect for cards and images
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('mouseover', () => {
+            card.style.transform = 'scale(1.05)';
+        });
+        card.addEventListener('mouseout', () => {
+            card.style.transform = 'scale(1)';
+        });
+    });
+    
+    document.querySelectorAll('.card-img-top').forEach(img => {
+        img.addEventListener('mouseover', () => {
+            img.style.transform = 'scale(1.1)';
+        });
+        img.addEventListener('mouseout', () => {
+            img.style.transform = 'scale(1)';
+        });
+    });
+</script>
+{% endblock scripts %}
+
+{% block styles %}
+<style>
+/* Hero Section Styling */
+.hero-section {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+    padding: 50px 0;
+}
+.hero-section .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.slider-caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 5px;
+}
+.slider-caption h2 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.slider-caption p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+.slider-caption .btn {
+    background-color: #ff6f61;
+    border: none;
+    font-size: 1rem;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+.slider-caption .btn:hover {
+    background-color: #e65a50;
+}
+
+/* Category Card Styling */
+.category-card {
+    display: block;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.category-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+.category-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+/* Button Hover Effects */
+.btn-outline-primary:hover {
+    background-color: #4a90e2;
+    color: white;
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+/* Card Hover Effect */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .hero-section .swiper-slide img {
+        height: 400px;
+    }
+    .slider-caption h2 {
+        font-size: 2rem;
+    }
+}
+</style>
+{% endblock styles %}

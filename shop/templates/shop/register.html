@@ -1,0 +1,145 @@
+{% extends 'shop/layouts/main.html' %}
+{% load static %}  <!-- Load static files -->
+
+{% block title %}
+  Registration | ShopKart
+{% endblock title %}
+
+{% block content %}
+<style>
+    .registration-container {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin: 50px auto;
+        max-width: 70%;
+        text-align: left;
+    }
+
+    h4 {
+        margin-bottom: 20px;
+        color: #333;
+        text-align: center;
+    }
+
+    .form-label {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .form-control {
+        padding: 12px;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .form-control:focus {
+        border-color: #80bdff;
+        outline: none;
+        box-shadow: 0 0 6px rgba(128, 189, 255, 0.5);
+    }
+
+    button {
+        padding: 12px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 100%;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .error-message {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .login-prompt {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .login-prompt a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .login-prompt a:hover {
+        text-decoration: underline;
+    }
+
+    /* Image Styling */
+    .registration-image {
+        max-width: 100%;
+        border-radius: 10px;
+    }
+
+    @media (max-width: 768px) {
+        .row {
+            flex-direction: column-reverse;
+        }
+    }
+</style>
+
+<div class="container" style="margin-top:70px;min-height:600px;">
+    <div class="row">
+        <!-- Left side for image -->
+        <div class="col-lg-6 d-none d-lg-block">
+            <img src="{% static 'images/logo.jpg' %}" alt="Registration Image" class="registration-image">
+        </div>
+
+        <!-- Right side for form -->
+        <div class="col-lg-6 col-md-12">
+            <div class="registration-container">
+                <h4>New User Registration</h4>
+                <hr style="border-color:#b8bfc2;">
+                {% include 'shop/inc/message.html' %}
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="username" class="form-label">User Name</label>
+                        {{ form.username }}
+                        {% if form.errors.username %}
+                            <div class="error-message">{{ form.errors.username }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="form-label">User Email</label>
+                        {{ form.email }}
+                        {% if form.errors.email %}
+                            <div class="error-message">{{ form.errors.email }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-4">
+                        <label for="password1" class="form-label">Password</label>
+                        {{ form.password1 }}
+                        {% if form.errors.password1 %}
+                            <div class="error-message">{{ form.errors.password1 }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-4">
+                        <label for="password2" class="form-label">Confirm Password</label>
+                        {{ form.password2 }}
+                        {% if form.errors.password2 %}
+                            <div class="error-message">{{ form.errors.password2 }}</div>
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+                <div class="login-prompt my-2">
+                    Already have an account? <a href="{% url 'login' %}">Login Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
