@@ -5,6 +5,8 @@
 {% endblock title %}
 
 {% block content %}
+<link rel="stylesheet" href="/static/css/style.css">
+
 <section class="payment-section py-4 my-5">
   <div class="container">
     <h2 class="text-center text-primary mb-4">SYAM MART</h2>
@@ -98,89 +100,7 @@
 {% endblock content %}
 
 {% block styles %}
-<style>
-  .payment-section {
-    background-color: #f4f4f4;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeSlideUp 1s ease-out forwards;
-  }
 
-  @keyframes fadeSlideUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .payment-section.animate {
-    animation: fadeSlideUp 1s ease-out forwards;
-  }
-
-  h2.text-center {
-    font-family: 'Arial', sans-serif;
-    font-size: 36px;
-    font-weight: bold;
-    color: #3797c0;
-  }
-
-  .payment-left {
-    background-color: #3797c0;
-    padding: 150px;
-    border-radius: 140px;
-    color: white;
-  }
-
-  .payment-right {
-    background-color: #28a745;
-    padding: 20px;
-    border-radius: 10px;
-    color: white;
-  }
-
-  .form-inline {
-    display: flex;
-    gap: 20px;
-  }
-
-  .form-inline .form-control {
-    display: inline-block;
-    width: 48%;
-  }
-
-  .form-label {
-    font-weight: bold;
-    color: white;
-  }
-
-  .btn-success {
-    background-color: #218838;
-    border-color: #218838;
-  }
-
-  .btn-success:hover {
-    background-color: #1e7e34;
-    border-color: #1e7e34;
-  }
-
-  .mt-4 img {
-    margin: 0 10px;
-  }
-
-  @media (max-width: 768px) {
-    .col-md-6, .col-md-5 {
-      margin-bottom: 20px;
-    }
-
-    .form-inline .form-control {
-      width: 100%;
-    }
-  }
-</style>
 {% endblock styles %}
 
 {% block scripts %}
