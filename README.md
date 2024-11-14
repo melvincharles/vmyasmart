@@ -1,4 +1,4 @@
-# syammart![alt text](6.jpg)
+# syammart <video controls src="static/images/SYAM MART.mp4" title="Title"></video>
 
 ```sh
 ShopKart: Your Ultimate Shopping Experience 🛍️
