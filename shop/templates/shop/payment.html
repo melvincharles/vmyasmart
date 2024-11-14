@@ -7,12 +7,10 @@
 {% block content %}
 <section class="payment-section py-4 my-5">
   <div class="container">
-    <!-- Company Name Centered -->
     <h2 class="text-center text-primary mb-4">SYAM MART</h2>
     <hr style="border-color:#0ba0df;">
     
     <div class="row">
-      <!-- Left Side - Customer Delivery Information (Blue Background) -->
       <div class="col-md-6 payment-left">
         <a href="https://www.paypal.com/checkout" target="_blank">
           <img src="{% static 'images/paypal1-logo.jpg' %}" alt="PayPal" width="100" height="60"> 
@@ -34,7 +32,6 @@
         <label for="country" class="form-label">Country</label>
         <select class="form-select mb-3" id="country">
           <option>Germany</option>
-          <!-- Add more countries as needed -->
         </select>
 
         <div class="form-inline">
@@ -65,7 +62,6 @@
         </div>
       </div>
 
-      <!-- Right Side - Payment Form (Green Background) -->
       <div class="col-md-5 payment-right">
         <form method="POST" action="{% url 'process_payment' %}">
           {% csrf_token %}

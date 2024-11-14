@@ -63,14 +63,13 @@ def add_to_cart(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         if request.user.is_authenticated:
             data = json.load(request)
-            product_qty = data['product_qty']  # Quantity requested by the user
-            product_id = data['pid']  # Product ID
+            product_qty = data['product_qty']  
+            product_id = data['pid']  
             try:
                 product = Product.objects.get(id=product_id)  # Fetch the product
                 if Cart.objects.filter(user=request.user, product_id=product_id).exists():
                     return JsonResponse({'status': 'Product Already in Cart'}, status=200)
                 else:
-                    # Ensure requested quantity does not exceed stock
                     if product.quantity >= product_qty:
                         Cart.objects.create(user=request.user, product_id=product_id, product_qty=product_qty)
                         return JsonResponse({'status': 'Product Added to Cart'}, status=200)
@@ -144,7 +143,6 @@ def product_details(request,cname,pname):
     
 
 def payment(request):
-    # Get the amount from the query parameters
     total_amount = request.GET.get('amount', 0)
     return render(request, 'shop/payment.html', {'total_amount': total_amount})
 
@@ -155,24 +153,18 @@ def process_payment(request):
         cvv = request.POST['cvv']
         amount = request.POST['amount']
 
-        # Here you would add your payment processing logic, e.g.:
-        # Validate card details, interact with payment gateway, etc.
-
-        # After processing, redirect to a success page
-        return redirect('payment_success')  # Redirect to a success page (create this view)
-
+       
+        return redirect('payment_success')  
     return HttpResponse("Invalid method", status=405)
 from django.shortcuts import render
 
 def payment_success(request):
-    # Assuming you store cart items in session
     if 'cart' in request.session:
         del request.session['cart']  # Clear the cart
 
 
     return render(request, 'shop/payment_success.html')
 def cart_view(request):
-    cart = request.session.get('cart', {})  # Get the cart from session
-    # Render your cart page with items
+    cart = request.session.get('cart', {}) 
     return render(request, 'shop/cart.html', {'cart': cart})
 
