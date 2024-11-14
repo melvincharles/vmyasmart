@@ -19,7 +19,6 @@ a {
   overflow: hidden;
 }
 
-/* Uniform image styling for product images */
 .product-image {
   width: 100%; /* Full width of the card */
   height: 200px; /* Set a fixed height */
@@ -27,7 +26,6 @@ a {
   object-position: center; /* Center the image in case of cropping */
 }
 
-/* Old Price Styling */
 .old_price {
   font-weight: bold;
   color: #b12704; /* Dark red for better contrast */
