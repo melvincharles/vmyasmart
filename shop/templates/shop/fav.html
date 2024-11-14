@@ -4,6 +4,8 @@
 {% endblock title %}
 
 {% block content %}
+<link rel="stylesheet" href="/static/css/style.css">
+
   <section class="py-5" style="background-color: #f8f9fa;">
     <div class="container">
       <div class="row mb-4">
@@ -53,24 +55,5 @@
 {% endblock content %}
 
 {% block styles %}
-<style>
-  .table thead th {
-    background-color: #007bff;
-    color: white;
-    font-weight: bold;
-  }
-  .table-hover tbody tr:hover {
-    background-color: #f1f1f1;
-  }
-  .btn-outline-danger {
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  .btn-outline-danger:hover {
-    background-color: #dc3545;
-    color: white;
-  }
-  .fw-bold {
-    font-weight: 600;
-  }
-</style>
+
 {% endblock styles %}
