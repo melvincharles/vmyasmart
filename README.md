@@ -1,4 +1,4 @@
-# syammart
+# syammart![alt text](6.jpg)
 
 ```sh
 ShopKart: Your Ultimate Shopping Experience 🛍️
