@@ -5,6 +5,8 @@
 {% endblock title %}
 
 {% block content %}
+<link rel="stylesheet" href="/static/css/style.css">
+
 <section class="py-5 text-center" style="margin-top:70px; background: linear-gradient(120deg, #4a90e2, #56d9fe); color: white;">
   <div class="container">
     <div class="row py-lg-5">
@@ -54,7 +56,6 @@
 {% block scripts %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"></script>
 <script>
-    // Hover effect for cards and images
     document.querySelectorAll('.card').forEach(card => {
         card.addEventListener('mouseover', () => {
             card.style.transform = 'scale(1.05)';
@@ -76,90 +77,5 @@
 {% endblock scripts %}
 
 {% block styles %}
-<style>
-/* Hero Section Styling */
-.hero-section {
-    position: relative;
-    height: 500px;
-    overflow: hidden;
-    padding: 50px 0;
-}
-.hero-section .swiper-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.slider-caption {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: #fff;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    border-radius: 5px;
-}
-.slider-caption h2 {
-    font-size: 3rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-.slider-caption p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-}
-.slider-caption .btn {
-    background-color: #ff6f61;
-    border: none;
-    font-size: 1rem;
-    padding: 10px 20px;
-    transition: background-color 0.3s ease;
-}
-.slider-caption .btn:hover {
-    background-color: #e65a50;
-}
 
-/* Category Card Styling */
-.category-card {
-    display: block;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.category-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-.category-card img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-}
-
-/* Button Hover Effects */
-.btn-outline-primary:hover {
-    background-color: #4a90e2;
-    color: white;
-    transform: scale(1.05);
-    transition: transform 0.3s ease;
-}
-
-/* Card Hover Effect */
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .hero-section .swiper-slide img {
-        height: 400px;
-    }
-    .slider-caption h2 {
-        font-size: 2rem;
-    }
-}
-</style>
 {% endblock styles %}
