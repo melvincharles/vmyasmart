@@ -8,8 +8,13 @@ import json
  
  
 def home(request):
-  products=Product.objects.filter(trending=1)
-  return render(request,"shop/index.html",{"products":products})
+    trending_products = Product.objects.filter(trending=True) 
+    featured_products = FeatureProduct.objects.filter(is_featured=True)  
+
+    return render(request, "shop/index.html", {
+        "trending_products": trending_products,
+        "featured_products": featured_products
+    })
  
 def favviewpage(request):
   if request.user.is_authenticated:
@@ -160,11 +165,60 @@ from django.shortcuts import render
 
 def payment_success(request):
     if 'cart' in request.session:
-        del request.session['cart']  # Clear the cart
+        del request.session['cart'] 
 
 
     return render(request, 'shop/payment_success.html')
 def cart_view(request):
     cart = request.session.get('cart', {}) 
     return render(request, 'shop/cart.html', {'cart': cart})
+
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Product
+from api.serializers import ProductSerializer  # Update the path if necessary
+
+class ProductDetailView(APIView):
+    
+    def get(self, request, id):
+        try:
+            product = Product.objects.get(id=id)
+            serializer = ProductSerializer(product)
+            return Response(serializer.data)
+        except Product.DoesNotExist:
+            return Response({'error': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, id):
+        try:
+            product = Product.objects.get(id=id)
+            product.delete()
+            return Response({'message': 'Product deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+        except Product.DoesNotExist:
+            return Response({'error': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def put(self, request, id):
+        try:
+            product = Product.objects.get(id=id)
+            # Use the serializer to validate and update the entire product
+            serializer = ProductSerializer(product, data=request.data)
+            if serializer.is_valid():
+                serializer.save()  # This will update the product with the new data
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Product.DoesNotExist:
+            return Response({'error': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def patch(self, request, id):
+        try:
+            product = Product.objects.get(id=id)
+            # Use the serializer to validate and update the product with partial data
+            serializer = ProductSerializer(product, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()  # This will update the product with the partial data
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Product.DoesNotExist:
+            return Response({'error': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)
 

@@ -10,14 +10,15 @@ def getFileName(requset,filename):
   return os.path.join('uploads/',new_filename)
  
 class Catagory(models.Model):
-  name=models.CharField(max_length=150,null=False,blank=False)
-  image=models.ImageField(upload_to=getFileName,null=True,blank=True)
-  description=models.TextField(max_length=500,null=False,blank=False)
-  status=models.BooleanField(default=False,help_text="0-show,1-Hidden")
-  created_at=models.DateTimeField(auto_now_add=True)
- 
-  def __str__(self) :
-    return self.name
+    name = models.CharField(max_length=150, null=False, blank=False)
+    image = models.ImageField(upload_to=getFileName, null=True, blank=True)
+    description = models.TextField(max_length=500, null=False, blank=False)
+    status = models.BooleanField(default=False, help_text="0-show,1-Hidden")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
  
 class Product(models.Model):
   category=models.ForeignKey(Catagory,on_delete=models.CASCADE)
@@ -30,6 +31,7 @@ class Product(models.Model):
   description=models.TextField(max_length=500,null=False,blank=False)
   status=models.BooleanField(default=False,help_text="0-show,1-Hidden")
   trending=models.BooleanField(default=False,help_text="0-default,1-Trending")
+  is_featured = models.BooleanField(null=True, blank=True)
   created_at=models.DateTimeField(auto_now_add=True)
  
   def __str__(self) :
@@ -49,3 +51,24 @@ class Favourite(models.Model):
 	user=models.ForeignKey(User,on_delete=models.CASCADE)
 	product=models.ForeignKey(Product,on_delete=models.CASCADE)
 	created_at=models.DateTimeField(auto_now_add=True)
+
+from django.db import models
+
+class FeatureProduct(models.Model):
+    category = models.ForeignKey('Catagory', on_delete=models.CASCADE)
+    name = models.CharField(max_length=150)
+    vendor = models.CharField(max_length=150)
+    product_image = models.ImageField(upload_to='images/feature_products', null=True, blank=True)
+    is_featured = models.BooleanField(default=False)  # Optional field
+
+    def __str__(self):
+        return self.name
+
+from django.db import models
+
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name

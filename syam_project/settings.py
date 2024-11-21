@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shop',
+    'rest_framework',
+    'api',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
@@ -83,16 +86,28 @@ DATABASES = {
     }
 }
 
+# settings.py
+
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'syammart',
-#         'USER': 'root',               # Default MAMP MySQL username
-#         'PASSWORD': 'root',                # Default MAMP MySQL password is usually empty
-#         'HOST': '127.0.0.1',           # Localhost IP address
-#         'PORT': '8889',                # Default MAMP MySQL port
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'syammart',  # Replace with your DB name
+#         'USER': 'postgres',  # Replace with your PostgreSQL username
+#         'PASSWORD': 'Raja@123',  # Replace with your PostgreSQL password
+#         'HOST': 'localhost',
+#         'PORT': '5432',
 #     }
 # }
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+#pip install psycopg2-binary==2.9.6
+
+
+#python manage.py makemigrations
+#python manage.py migrate
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

@@ -1,71 +1,152 @@
 {% extends 'shop/layouts/main.html' %}
+{% load static %}
+
 {% block title %}
-ShopKart | Your Ultimate Shopping Experience
+ShopKart | Ultimate Shopping Experience
 {% endblock title %}
 
 {% block content %}
 {% include 'shop/inc/slider.html' %}
-<link rel="stylesheet" href="static/css/style.css">
-
-
-
-<div class="container mt-5" id="latest-offers">
-    <div class="section-header text-center mb-5">
-        <h2 class="fw-bold text-dark">Latest Offers</h2>
-    </div>
-    <div class="row">
-        {% for item in products %}
-        <div class="col-md-4 col-lg-3 col-sm-6 mb-4">
-            <div class="card product-card shadow-sm border-0">
-                <div class="product-image-container position-relative">
-                    <img src="{{ item.product_image.url }}" class="card-img-top" alt="{{ item.name }}">
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">Sale</span>
-                </div>
-                <div class="card-body text-center">
-                    <h5 class="card-title text-dark">{{ item.name }}</h5>
-                    <p class="card-text text-muted">{{ item.category.name }}</p>
-                    <p class="price">
-                        <span class="text-decoration-line-through text-muted">€{{ item.original_price|floatformat:2 }}</span>
-                        <span class="fw-bold text-danger">€{{ item.selling_price|floatformat:2 }}</span>
-                    </p>
-                    <a href="{% url 'product_details' item.category.name item.name %}" class="btn btn-primary w-100">Shop Now</a>
-                </div>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<section class="py-5 overflow-hidden">
+    <div class="container-lg">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-header d-flex justify-content-between align-items-center mb-5">
+            <h2 class="section-title mb-0">Featured Products</h2>
+            
+            <div class="d-flex align-items-center">
+              <a href="#" class="btn btn-primary me-2">View All</a>
+              <div class="swiper-buttons">
+                <button class="swiper-prev category-carousel-prev btn btn-yellow">❮</button>
+                <button class="swiper-next category-carousel-next btn btn-yellow">❯</button>
+              </div>
             </div>
+          </div>
+          
+     
+<div class="category-carousel swiper">
+    <div class="swiper-wrapper">
+      {% for feature in featured_products %}
+      <div class="swiper-slide d-flex flex-column align-items-center">
+        <div class="position-relative">
+          <img src="{{ feature.product_image.url }}" class="rounded-circle" alt="{{ feature.name }}" style="object-fit: cover; width: 150px; height: 150px;">
+          <span class="badge bg-success position-absolute top-0 start-0 m-2">Featured</span>
         </div>
-        {% empty %}
-        <div class="col-12">
-            <p class="text-center">No latest offers available at the moment.</p>
+        <div class="text-center mt-2">
+          <h5 class="text-dark mb-1">{{ feature.name }}</h5>
+          <p class="text-muted mb-2">{{ feature.category.name }}</p>
+          <a href="{% url 'product_details' feature.category.name feature.name %}" class="btn btn-gradient">View Product</a>
         </div>
-        {% endfor %}
+      </div>
+      {% empty %}
+      <div class="col-12">
+        <p class="text-center">No featured products available at the moment.</p>
+      </div>
+      {% endfor %}
     </div>
+  </div>
+  
+  
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+<div class="container mt-5" id="trending-products">
+  <div class="section-header d-flex justify-content-between align-items-center mb-5">
+    <h2 class="fw-bold text-dark">Latest Offers</h2>
+  </div>
+  <div class="row">
+    {% for product in trending_products %}
+    <div class="col-md-4 col-lg-3 col-sm-6 mb-4">
+      <div class="card product-card shadow-sm border-0">
+        <div class="product-image-container position-relative">
+          <img src="{{ product.product_image.url }}" class="card-img-top" alt="{{ product.name }}">
+          <span class="badge bg-warning position-absolute top-0 start-0 m-2">Sale</span>
+        </div>
+        <div class="card-body text-center">
+          <h5 class="card-title text-dark">{{ product.name }}</h5>
+          <p class="card-text text-muted">{{ product.category.name }}</p>
+          <p class="price">
+            <span class="text-decoration-line-through text-muted">€{{ product.original_price|floatformat:2 }}</span>
+            <span class="fw-bold text-danger">€{{ product.selling_price|floatformat:2 }}</span>
+          </p>
+          <a href="{% url 'product_details' product.category.name product.name %}" class="btn btn-primary w-100">Shop Now</a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+      <p class="text-center">No trending products available at the moment.</p>
+    </div>
+    {% endfor %}
+  </div>
 </div>
 
 {% endblock content %}
 
 {% block scripts %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
 <script>
-    document.querySelectorAll('.card').forEach(card => {
-        card.addEventListener('mouseover', () => {
-            card.style.transform = 'scale(1.05)';
-        });
-        card.addEventListener('mouseout', () => {
-            card.style.transform = 'scale(1)';
-        });
+  var swiper = new Swiper('.category-carousel', {
+    slidesPerView: 3, 
+    spaceBetween: 20, 
+    navigation: {
+      nextEl: '.category-carousel-next',
+      prevEl: '.category-carousel-prev',
+    },
+    loop: true, 
+    breakpoints: {
+      1200: {
+        slidesPerView: 4,
+      },
+      992: {
+        slidesPerView: 3,
+      },
+      768: {
+        slidesPerView: 2,
+      },
+      576: {
+        slidesPerView: 1,
+      },
+    },
+  });
+
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mouseover', () => {
+      card.style.transform = 'scale(1.05)';
+      card.style.transition = 'transform 0.3s';
     });
-    
-    document.querySelectorAll('.card-img-top').forEach(img => {
-        img.addEventListener('mouseover', () => {
-            img.style.transform = 'scale(1.1)';
-        });
-        img.addEventListener('mouseout', () => {
-            img.style.transform = 'scale(1)';
-        });
+    card.addEventListener('mouseout', () => {
+      card.style.transform = 'scale(1)';
     });
+  });
+
+  document.querySelectorAll('.card-img-top').forEach(img => {
+    img.addEventListener('mouseover', () => {
+      img.style.transform = 'scale(1.1)';
+      img.style.transition = 'transform 0.3s';
+    });
+    img.addEventListener('mouseout', () => {
+      img.style.transform = 'scale(1)';
+    });
+  });
+document.querySelectorAll('.category-carousel img').forEach(img => {
+  img.addEventListener('mouseover', () => {
+    img.style.transform = 'scale(1.1)';
+    img.style.transition = 'transform 0.3s';
+  });
+  img.addEventListener('mouseout', () => {
+    img.style.transform = 'scale(1)';
+  });
+});
+
 </script>
-   
 {% endblock scripts %}
 
 {% block styles %}
-
 {% endblock styles %}

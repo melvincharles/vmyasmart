@@ -18,6 +18,12 @@ urlpatterns= [
     path('payment/', views.payment, name='payment'),
     path('process_payment/', views.process_payment, name='process_payment'),
     path('payment_success/', views.payment_success, name='payment_success'),
+    path('api/products/<int:id>/', views.ProductDetailView.as_view(), name='product-detail'),
+    # path('api/categories/', views.CategoryListCreate.as_view(), name='category-list-create'),  # For listing and creating categories
+    # path('api/categories/<int:id>/', views.CategoryDetail.as_view(), name='category-detail'),  # For retrieving, updating, and deleting individual categories
+  
+    
+    
     
 
     
