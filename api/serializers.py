@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from shop.models import Catagory
 
-class CategorySerializer(serializers.ModelSerializer):  
+class CategorySerializer(serializers.ModelSerializer):  # You can still use "Category" for consistency
     class Meta:
         model = Catagory  # Ensure this matches the model name
         fields = ["id", "name", "image", "description", "status", "created_at"]
