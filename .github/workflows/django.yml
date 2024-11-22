@@ -13,14 +13,17 @@ jobs:
 
     steps:
     - name: checkoutcode
-    - uses: actions/checkout@v4
+      uses: actions/checkout@v4
+      
     - name: Set up Python 
       uses: actions/setup-python@v3
       with:
         python-version: '3.9'
+        
     - name: Install Dependencies
       run: |
         pip install -r requirements.txt
+        
     - name: Run Tests
       run: |
         python manage.py test api.tests.test_models
