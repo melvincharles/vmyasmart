@@ -80,68 +80,76 @@ After completing the installation, you can use the application to:
 - Proceed to checkout and make payments
 - Admin can manage the products from the Django Admin Panel
 
-## Project Structure
-
-```plaintext
 shopcart/                        # Root directory of the project
-├── shop/                          # The main Django app (e-commerce logic)
-│   ├── migrations/               # Database migrations
-│   │   ├── 0001_initial.py       # Initial migration
+├── shop/                        # Main Django app (e-commerce logic)
+│   ├── migrations/              # Database migrations
+│   │   ├── 0001_initial.py      # Initial migration
 │   │   ├── 0002_product_is_featured_featuredproduct.py
 │   │   ├── 0003_remove_product_is_featured_delete_featuredproduct.py
 │   │   └── __init__.py
-│   ├── templates/                # Templates for rendering HTML pages
-│   │   ├── shop/                  # Shop app-specific templates
-│   │   │   ├── inc/               # Reusable partial templates (header, footer, etc.)
-│   │   │   │   ├── footer.html    # Footer template
-│   │   │   │   ├── message.html   # Message template
-│   │   │   │   ├── navbar.html    # Navbar template
-│   │   │   │   └── slider.html    # Slider template
-│   │   │   ├── layouts/           # Layout templates (base page structure)
-│   │   │   │   └── main.html      # Main layout template (base HTML)
-│   │   │   ├── products/          # Product-related templates
-│   │   │   │   ├── index.html     # Homepage template
-│   │   │   │   ├── product_details.html # Product detail page template
-│   │   │   │   ├── cart.html      # Shopping cart template
-│   │   │   │   ├── catagory_products.html # Category products page
-│   │   │   │   ├── collections.html     # Collections (categories) page
-│   │   │   │   ├── fav.html       # Favorite products page
-│   │   │   │   ├── login.html     # Login page
-│   │   │   │   ├── payment.html   # Payment page
-│   │   │   │   ├── payment_success.html  # Payment success page
-│   │   │   │   ├── register.html  # Register page
-│   │   │   │   └── .DS_Store      # macOS system file (optional to include)
+│   ├── templates/               # Templates for rendering HTML pages
+│   │   ├── shop/                # Shop app-specific templates
+│   │   │   ├── inc/             # Reusable partial templates (header, footer, etc.)
+│   │   │   │   ├── footer.html
+│   │   │   │   ├── message.html
+│   │   │   │   ├── navbar.html
+│   │   │   │   └── slider.html
+│   │   │   ├── layouts/         # Layout templates (base page structure)
+│   │   │   │   └── main.html
+│   │   │   ├── products/        # Product-related templates
+│   │   │       ├── index.html
+│   │   │       ├── product_details.html
+│   │   │       ├── cart.html
+│   │   │       ├── catagory_products.html
+│   │   │       ├── collections.html
+│   │   │       ├── fav.html
+│   │   │       ├── login.html
+│   │   │       ├── payment.html
+│   │   │       ├── payment_success.html
+│   │   │       ├── register.html
+│   │   │       └── .DS_Store
 │   ├── __init__.py
-│   ├── admin.py                   # Admin interface configuration
-│   ├── apps.py                    # App configuration
-│   ├── form.py                     # Forms for handling user input (e.g., login, registration)
-│   ├── models.py                  # Database models (Product, Category, etc.)
-│   ├── tests.py                   # Test cases for the app
-│   ├── urls.py                    # URL patterns for the app
-│   └── views.py                   # Views for handling page requests
+│   ├── admin.py                 # Admin interface configuration
+│   ├── apps.py                  # App configuration
+│   ├── form.py                  # Forms for handling user input (e.g., login, registration)
+│   ├── models.py                # Database models (Product, Category, etc.)
+│   ├── tests.py                 # Test cases for the app
+│   ├── urls.py                  # URL patterns for the app
+│   └── views.py                 # Views for handling page requests
 │
-├── static/                        # The static directory for your project
-│   ├── css/                       # Global CSS (stylesheets)
-│   │   └── style.css              # Main stylesheet
-│   ├── images/                    # Global images (e.g., product images)
-│   │   └── products/              # Product-specific images
+├── api/                         # API app for REST endpoints
+│   ├── migrations/              # Database migrations (if needed)
+│   │   └── __init__.py
+│   ├── serializers.py           # DRF serializers for converting models to JSON
+│   ├── views.py                 # API views
+│   ├── tests/                   # Test cases for the API
+│   │   ├── __init__.py
+│   │   ├── test_models.py       # Tests for API-related models
+│   │   ├── test_views.py        # Tests for API views
+│   │   └── test_serializers.py  # Tests for API serializers
+│   ├── urls.py                  # URL patterns for the API app
+│   └── __init__.py
+│
+├── static/                      # The static directory for your project
+│   ├── css/                     # Global CSS (stylesheets)
+│   │   └── style.css
+│   ├── images/                  # Global images (e.g., product images)
+│   │   └── products/            # Product-specific images
 │   │       └── b1.jpg
-│   ├── uploads/                   # User-uploaded files (e.g., product images)
-│   └── .DS_Store                  # macOS system file (optional to include)
+│   ├── uploads/                 # User-uploaded files (e.g., product images)
+│   └── .DS_Store
 │
-├── syam_project/                  # Main Django project directory
+├── syam_project/                # Main Django project directory
 │   ├── __init__.py
-│   ├── asgi.py                    # ASGI entry point for asynchronous support
-│   ├── settings.py                # Django settings file
-│   ├── urls.py                    # Root URL configuration for the entire project
-│   ├── wsgi.py                    # WSGI entry point for production
-│   └── .DS_Store                  # macOS system file (optional to include)
+│   ├── asgi.py                  # ASGI entry point for asynchronous support
+│   ├── settings.py              # Django settings file
+│   ├── urls.py                  # Root URL configuration for the entire project
+│   ├── wsgi.py                  # WSGI entry point for production
+│   └── .DS_Store
 │
-├── db.sqlite3                     # SQLite database file
-├── manage.py                      # Django management command tool
-├── Pipfile                        # Pipenv dependency manager file
-├── README.md                      # Project documentation (this file)
-└── .DS_Store            
-          # macOS system file (optional to include)
+├── db.sqlite3                   # SQLite database file
+├── manage.py                    # Django management command tool
+├── Pipfile                      # Pipenv dependency manager file
+├── README.md                    # Project documentation (this file)
+└── .DS_Store                    # macOS system file (optional to include)
 
-```
