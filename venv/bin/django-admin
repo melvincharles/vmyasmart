@@ -1,4 +1,4 @@
-#!/Users/yazhini/Desktop/shopcart/venv/bin/python3
+#!/Users/yazhini/Desktop/syammart/venv/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys
