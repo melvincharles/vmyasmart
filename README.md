@@ -1,4 +1,4 @@
-# syammart
+# vmyasmart
 
 ```sh
 ShopKart: Your Ultimate Shopping Experience 🛍️
