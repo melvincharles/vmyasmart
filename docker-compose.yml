@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  web:
+    build: .  # This will build the Dockerfile in the current directory
+    image: vmyasmart_django_app  # Optional: You can name your Docker image here
+    container_name: django_app
+    restart: always
+    ports:
+      - "8000:8000"  # Maps port 8000 of the container to port 8000 on the host
+    volumes:
+      - .:/app  # Mounts the current directory to the /app directory in the container
+    environment:
+      - DEBUG=False  # Django setting (set to False for production)
+      - ALLOWED_HOSTS=127.0.0.1,localhost,0.0.0.0  # Adjust this as needed for production
+    depends_on:
+      - db  # This ensures that the 'db' service (PostgreSQL) starts before the Django app
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             gunicorn vmyasmart.wsgi:application --bind 0.0.0.0:8000"
+
+  db:
+    image: postgres:13  # Using the official PostgreSQL image
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres_user  # Set a username for PostgreSQL
+      POSTGRES_PASSWORD: postgres_password  # Set a password for PostgreSQL
+      POSTGRES_DB: postgres_db  # Set a database name for PostgreSQL
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Volume for PostgreSQL data persistence
+
+  redis:
+    image: redis:6  # Optional: Redis for caching (if needed for your project)
+    container_name: redis_cache
+    restart: always
+
+volumes:
+  postgres_data:  # Persistent storage for PostgreSQL database
+

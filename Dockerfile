@@ -1,26 +1,31 @@
 # Use an official Python runtime as the base image
-FROM python:3.12-slim
+FROM python:3.9-slim
+
+# Set environment variables to avoid Python writing .pyc files and buffering output
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Install system dependencies (required for psycopg2 and other packages)
+# Install system dependencies for Pillow and psycopg2
 RUN apt-get update && apt-get install -y \
+    libjpeg-dev \
+    zlib1g-dev \
     libpq-dev \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get clean
 
-# Copy the application code to the container
-COPY . /app
+# Copy requirements.txt to the working directory
+COPY requirements.txt /app/
 
-# Install dependencies
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the port the app runs on
+# Copy the entire project into the working directory
+COPY . /app/
+
+# Expose port 8000 for the Django application
 EXPOSE 8000
 
-# Command to run the application
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-
-
+# Run the Django development server (replace 'vmyasmart.wsgi:application' if needed)
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "vmyasmart.wsgi:application"]
