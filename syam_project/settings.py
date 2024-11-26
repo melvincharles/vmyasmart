@@ -80,27 +80,27 @@ WSGI_APPLICATION = 'syam_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # settings.py
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'syammart',  # Replace with your DB name
-#         'USER': 'postgres',  # Replace with your PostgreSQL username
-#         'PASSWORD': 'Raja@123',  # Replace with your PostgreSQL password
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB', 'mydatabase'),  # Default to your db name
+        'USER': os.getenv('POSTGRES_USER', 'myuser'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'mypassword'),
+        'HOST': 'db',  # The service name defined in docker-compose.yml
+        'PORT': '5432',
+    }
+}
+
 
 #pip install psycopg2-binary==2.9.6
 
@@ -154,6 +154,7 @@ MEDIA_ROOT=BASE_DIR/'static'
 # ]
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),  # Ensure you have a static directory in your project
 ]

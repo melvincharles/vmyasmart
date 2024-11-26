@@ -1,31 +1,31 @@
-# Use an official Python runtime as the base image
+# Basis-Image
 FROM python:3.9-slim
 
-# Set environment variables to avoid Python writing .pyc files and buffering output
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+# Arbeitsverzeichnis festlegen
+WORKDIR /usr/src/app
 
-# Set the working directory in the container
-WORKDIR /app
-
-# Install system dependencies for Pillow and psycopg2
+# Systemabhängigkeiten installieren
 RUN apt-get update && apt-get install -y \
-    libjpeg-dev \
-    zlib1g-dev \
+    python3-dev \
+    build-essential \
     libpq-dev \
-    && apt-get clean
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements.txt to the working directory
-COPY requirements.txt /app/
+# Abhängigkeiten installieren
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Anwendungscode kopieren
+COPY . .
 
-# Copy the entire project into the working directory
-COPY . /app/
+# Statische Dateien sammeln
+RUN python manage.py collectstatic --noinput
 
-# Expose port 8000 for the Django application
+# Gunicorn installieren
+RUN pip install gunicorn
+
+# Standard-Port für die Anwendung
 EXPOSE 8000
 
-# Run the Django development server (replace 'vmyasmart.wsgi:application' if needed)
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "vmyasmart.wsgi:application"]
+# Startbefehl für Gunicorn
+CMD ["gunicorn",  "--workers", "3", "--bind", "0.0.0.0:8000", "syam_project.wsgi:application"]
