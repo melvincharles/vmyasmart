@@ -11,41 +11,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:13
-        env:
-          POSTGRES_DB: ${{ secrets.DB_NAME }}  # Use GitHub secrets
-          POSTGRES_USER: ${{ secrets.DB_USER }}  # Use GitHub secrets
-          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}  # Use GitHub secrets
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd="pg_isready -U $POSTGRES_USER"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-
     steps:
-    - name: Checkout code
+    - name: checkoutcode
       uses: actions/checkout@v4
-
-    - name: Set up Python
+      
+    - name: Set up Python 
       uses: actions/setup-python@v3
       with:
         python-version: '3.9'
-
+        
     - name: Install Dependencies
       run: |
         pip install -r requirements.txt
-
-    - name: Run Database Migrations
-      run: |
-        python manage.py migrate
-
+        
     - name: Run Tests
       run: |
         python manage.py test api.tests.test_models
-      env:
-        DATABASE_URL: postgres://${{ secrets.DB_USER }}:${{ secrets.DB_PASSWORD }}@localhost:5432/${{ secrets.DB_NAME }}
-
