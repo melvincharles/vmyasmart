@@ -15,9 +15,26 @@
             <a class="nav-link" href="{% url 'register' %}"><i class="fa fa-users"></i> Register</a>
           {% endif %}
             <a class="nav-link" href="{% url 'collections' %}"><i class="fa fa-cubes"></i> Collections</a>
-            <a class="nav-link" href="{% url 'cart' %}"><i class="fa fa-shopping-cart"></i> Cart</a>
+            <a class="nav-link" href="{% url 'cart' %}">
+              <i class="fa fa-shopping-cart"></i> Cart
+              <span id="cart-icon">0</span> <!-- This is the icon's quantity display -->
+          </a>
             <a class="nav-link" href="{% url 'favviewpage' %}"><i class="fa fa-heart"></i> Favourite</a>
         </div>
       </div>
     </div>
   </nav>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Initialize cart quantity from localStorage when the page loads
+      let cartQuantity = localStorage.getItem('cart_quantity') || 0;
+      const cartIcon = document.querySelector("#cart-icon");
+      
+      if (cartIcon) {
+        // // Use this to reset the Cart number (e.g when it is Nan, freezes or simply wrong) 
+        // localStorage.removeItem('cart_quantity');
+        cartIcon.innerHTML = cartQuantity; // Update the cart icon with the stored value
+      }
+    });
+  </script>

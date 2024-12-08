@@ -73,11 +73,11 @@ def add_to_cart(request):
             try:
                 product = Product.objects.get(id=product_id)  # Fetch the product
                 if Cart.objects.filter(user=request.user, product_id=product_id).exists():
-                    return JsonResponse({'status': 'Product Already in Cart'}, status=200)
+                    return JsonResponse({'status': 'Product Already in Cart', "product_qty": 0}, status=200)
                 else:
                     if product.quantity >= product_qty:
                         Cart.objects.create(user=request.user, product_id=product_id, product_qty=product_qty)
-                        return JsonResponse({'status': 'Product Added to Cart'}, status=200)
+                        return JsonResponse({'status': 'Product Added in Cart', "product_qty": product_qty}, status=200)
                     else:
                         return JsonResponse({'status': 'Only %s items left in stock' % product.quantity}, status=200)
             except Product.DoesNotExist:

@@ -30,7 +30,7 @@ ShopKart | Online Shopping
         <h5 class="my-2 text-primary">Offer Price: € {{ products.selling_price }}</h5>
 
         <div class="my-3">
-          {% if products.category.name == "Womens Collection" or products.category.name == "Mens Collection" %}
+          {% if products.category.name == "Women Collection" or products.category.name == "Men Collection" %}
             <label for="sizeSelect" class="form-label" style="font-size: 0.9rem;">Select Size:</label>
             <select id="sizeSelect" class="form-select form-select-sm" aria-label="Select size" style="width: auto;">
               <option value="S">S</option>
@@ -126,8 +126,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
         },
         body: JSON.stringify(postObj)
       }).then(response => response.json())
-        .then(data => alert(data['status']));
+        .then(data => {
+          alert(data['status']);
 
+          // Update the cart icon quantity
+          const cartIcon = document.querySelector("#cart-icon");
+          if (cartIcon) {
+            // Get the current value of the cart icon and convert it to a number
+            let currentQty = parseInt(cartIcon.innerHTML, 10);
+            cartIcon.innerHTML = currentQty + data['product_qty'];  // Set the product quantity inside the cart icon
+            localStorage.setItem('cart_quantity', cartIcon.innerHTML);
+          } else {
+              console.error('Cart icon element not found.');  // Log error if the cart icon is not found
+          }
+        })
     } else {
       alert("Please Enter The Quantity");
     }

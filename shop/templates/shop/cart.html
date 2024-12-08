@@ -31,16 +31,19 @@
                     <td>{{ item.product_qty }}</td>
                     <td class="amt">{{ item.total_cost | stringformat:'d' }}</td>
                     <td>
-                        <a href="{% url 'remove_cart' item.id %}" onclick="return confirm('Are you sure? to Remove')" class="btn btn-danger btn-sm">
-                            <i class="fa fa-trash"></i> Remove
+                        <a href="{% url 'remove_cart' item.id %}" 
+                        onclick="handleRemoveItem(this, '{{ item.product_qty }}')" 
+                        class="btn btn-danger btn-sm">
+                        <i class="fa fa-trash"></i> Remove
                         </a>
                     </td>
                 </tr>
                 {% endfor %}
                 <tr>
-                    <td colspan="3"></td>
-                    <td><b>Total Amount</b></td>
-                    <td><b>€{{ total }}</b></td>
+                    <td></td>
+                    <td></td>
+                    <td colspan="2"><b>Total Amount</b></td>
+                    <td><b>€ {{ total }}</b></td>
                     <td>
                         <a href="{% url 'payment' %}?amount={{ total }}" class="btn btn-primary btn-sm">
                             <i class="fa fa-check-circle"></i> Check Out
@@ -48,10 +51,8 @@
                     </td>
                 </tr>
                 </tbody>
-            </table>
-            
-            
-        </div>
+            </table> 
+      </div>
     </div>
 </section>
 
@@ -62,10 +63,34 @@
       return acc += Number(curr.textContent);
     }, 0);
     
-    document.getElementById("net").innerHTML = "Euro: " + res;
+    document.getElementById("net").innerHTML = ": € " + res;
 
     const checkoutButton = document.querySelector('.btn-primary');
-    checkoutButton.href = checkoutButton.href + 'amount=' + res;
-</script>
+    checkoutButton.href = checkoutButton.href + '€ ' + res;
+
+
+    // Function to handle the remove item action
+    function handleRemoveItem(link, productQty) {
+        event.preventDefault(); 
+        const userConfirmed = confirm(`Are you sure to remove item?`);
+        
+        if (userConfirmed) {
+            // Update the cart icon immediately
+            const cartIcon = document.querySelector("#cart-icon");
+            if (cartIcon) {
+                let currentQuantity = parseInt(cartIcon.innerHTML, 10) || 0;
+                let newQuantity = currentQuantity - productQty;
+                localStorage.setItem('cart_quantity', newQuantity);
+            }
+
+            // Continue to the server-side operation
+            window.location.href = link.href; // Redirect to the remove_cart view
+        } else {
+          return false;
+        }
+    }
+
+
+  </script>
 
 {% endblock content %}
