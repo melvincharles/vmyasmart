@@ -3,59 +3,59 @@
   Cart Items | ShopKart
 {% endblock title %}
 {% block content %}
-  <section class="bg-light py-4 my-5" style="min-height:600px;">
+<section class="bg-light py-4 my-5" style="min-height:600px;">
     <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <h4 class="mb-3">Cart Items</h4>
-          <hr style="border-color:#b8bfc2;">
-        </div>
-      
-        <table class="table table-striped">
-            <thead>
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mb-3">Cart Items</h4>
+                <hr style="border-color:#b8bfc2;">
+            </div>
+        
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Product Name</th>
+                        <th>Unit Price</th>
+                        <th>Quantity</th>
+                        <th>Amount</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in cart %}
                 <tr>
-                    <th>Image</th>
-                    <th>Product Name</th>
-                    <th>Unit Price</th>
-                    <th>Quantity</th>
-                    <th>Amount</th>
-                    <th>Remove</th>
+                    <td><img src="{{ item.product.product_image.url }}" height="75px" alt="{{ item.product.name }}"></td>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.product.selling_price | stringformat:'d' }}</td>
+                    <td>{{ item.product_qty }}</td>
+                    <td class="amt">{{ item.total_cost | stringformat:'d' }}</td>
+                    <td>
+                        <a href="{% url 'remove_cart' item.id %}" onclick="return confirm('Are you sure? to Remove')" class="btn btn-danger btn-sm">
+                            <i class="fa fa-trash"></i> Remove
+                        </a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-            {% for item in cart %}
-            <tr>
-                <td><img src="{{ item.product.product_image.url }}" height="75px" alt="{{ item.product.name }}"></td>
-                <td>{{ item.product.name }}</td>
-                <td>{{ item.product.selling_price | stringformat:'d' }}</td>
-                <td>{{ item.product_qty }}</td>
-                <td class="amt">{{ item.total_cost | stringformat:'d' }}</td>
-                <td>
-                    <a href="{% url 'remove_cart' item.id %}" onclick="return confirm('Are you sure? to Remove')" class="btn btn-danger btn-sm">
-                        <i class="fa fa-trash"></i> Remove
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-            <tr>
-                <td></td>
-                <td></td>
-                <td colspan="2"><b>Total Amount</b></td>
-                <th id="net">0</th>
-                <td>
-                    <a href="{% url 'payment' %}?amount={{ res }}" class="btn btn-primary btn-sm">
-                        <i class="fa fa-check-circle"></i> Check Out
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-       
-      </div>
+                {% endfor %}
+                <tr>
+                    <td colspan="3"></td>
+                    <td><b>Total Amount</b></td>
+                    <td><b>€{{ total }}</b></td>
+                    <td>
+                        <a href="{% url 'payment' %}?amount={{ total }}" class="btn btn-primary btn-sm">
+                            <i class="fa fa-check-circle"></i> Check Out
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            
+            
+        </div>
     </div>
-  </section>
+</section>
 
-  <script>
+<script>
     const nodes = document.querySelectorAll('.amt');
     const arr = Array.from(nodes);
     const res = arr.reduce((acc, curr) => {
@@ -66,6 +66,6 @@
 
     const checkoutButton = document.querySelector('.btn-primary');
     checkoutButton.href = checkoutButton.href + 'amount=' + res;
-  </script>
+</script>
 
 {% endblock content %}

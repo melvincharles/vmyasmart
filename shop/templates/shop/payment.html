@@ -1,5 +1,6 @@
 {% extends 'shop/layouts/main.html' %}
-{% load static %} <!-- Load static files -->
+{% load static %}
+
 {% block title %}
   Payment Details | SYAM MART
 {% endblock title %}
@@ -7,22 +8,28 @@
 {% block content %}
 <link rel="stylesheet" href="/static/css/style.css">
 
-<section class="payment-section py-4 my-5">
+<section class="payment-section py-5 bg-light">
   <div class="container">
-    <h2 class="text-center text-primary mb-4">SYAM MART</h2>
-    <hr style="border-color:#0ba0df;">
-    
-    <div class="row">
-      <div class="col-md-6 payment-left">
-        <a href="https://www.paypal.com/checkout" target="_blank">
-          <img src="{% static 'images/paypal1-logo.jpg' %}" alt="PayPal" width="100" height="60"> 
-        </a>
-        
-        <a href="https://www.commerzbank.de">
-          <img src="{% static 'images/bank-transfer-logo.png' %}" alt="Bank Transfer" width="100" height="60">
-        </a>
+    <div class="text-center">
+      <h2 class="text-primary mb-4">SYAM MART</h2>
+      <p class="lead">Secure Payment Gateway</p>
+      <hr class="mb-5" style="border-top: 3px solid #0ba0df;">
+    </div>
 
-        <p>Register or Login to save your details for future purchases.</p>
+    <div class="row justify-content-center">
+      <!-- Left Section -->
+      <div class="col-md-6 bg-white shadow-sm rounded p-4 mb-4 payment-left">
+        <h5 class="mb-3">Choose Payment Option</h5>
+        <div class="d-flex justify-content-start align-items-center mb-3">
+          <a href="https://www.paypal.com/checkout" target="_blank">
+            <img src="{% static 'images/paypal1-logo.jpg' %}" alt="PayPal" class="img-fluid mx-2" style="height: 60px;">
+          </a>
+          <a href="https://www.commerzbank.de">
+            <img src="{% static 'images/bank-transfer-logo.png' %}" alt="Bank Transfer" class="img-fluid mx-2" style="height: 60px;">
+          </a>
+        </div>
+
+        <h5 class="mt-4">Customer Details</h5>
         <label for="email" class="form-label">E-mail</label>
         <input type="email" class="form-control mb-3" id="email" placeholder="Enter your email" required>
         <div class="form-check mb-3">
@@ -30,69 +37,81 @@
           <label class="form-check-label" for="news">Receive news and offers via email</label>
         </div>
 
-        <h5>Customer Delivery</h5>
         <label for="country" class="form-label">Country</label>
         <select class="form-select mb-3" id="country">
-          <option>Germany</option>
+          <option selected>Germany</option>
         </select>
 
-        <div class="form-inline">
-          <label for="first_name" class="form-label">First Name</label>
-          <input type="text" class="form-control mb-3 mr-2" id="first_name" placeholder="Enter first name" required>
-
-          <label for="last_name" class="form-label">Last Name</label>
-          <input type="text" class="form-control mb-3" id="last_name" placeholder="Enter last name" required>
+        <div class="row mb-3">
+          <div class="col">
+            <label for="first_name" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="first_name" placeholder="Enter first name" required>
+          </div>
+          <div class="col">
+            <label for="last_name" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="last_name" placeholder="Enter last name" required>
+          </div>
         </div>
 
         <label for="address" class="form-label">Street Address</label>
         <input type="text" class="form-control mb-3" id="address" placeholder="Enter your street address" required>
 
-        <label for="zip" class="form-label">Postal Code</label>
-        <input type="text" class="form-control mb-3" id="zip" placeholder="Postal Code" required>
-
-        <label for="city" class="form-label">City</label>
-        <input type="text" class="form-control mb-2" id="city" placeholder="City" required>
-
-        <h5>Shipment</h5>
-        <div class="form-check mb-2">
-          <input class="form-check-input" type="radio" name="shipping" id="dpd" checked>
-          <label class="form-check-label" for="dpd">DPD: Shipping in 2-3 working days (Free)</label>
-        </div>
-        <div class="form-check mb-3">
-          <input class="form-check-input" type="radio" name="shipping" id="dhl">
-          <label class="form-check-label" for="dhl">DHL Express: Shipping in 24-36 hours (€2.99)</label>
+        <div class="row mb-3">
+          <div class="col">
+            <label for="zip" class="form-label">Postal Code</label>
+            <input type="text" class="form-control" id="zip" placeholder="Postal Code" required>
+          </div>
+          <div class="col">
+            <label for="city" class="form-label">City</label>
+            <input type="text" class="form-control" id="city" placeholder="City" required>
+          </div>
         </div>
       </div>
 
-      <div class="col-md-5 payment-right">
+      <!-- Right Section -->
+      <div class="col-md-5 bg-white shadow-sm rounded p-4 payment-right">
         <form method="POST" action="{% url 'process_payment' %}">
           {% csrf_token %}
-          <div class="mt-4 text-center">
-            <img src="{% static 'images/mastercard-logo.png' %}" alt="MasterCard" width="100" height="60">
-            <img src="{% static 'images/amex-logo.avif' %}" alt="American Express" width="100" height="60">
-            <img src="{% static 'images/visaCard.png' %}" alt="VisaCard" width="100" height="60">
-            <img src="{% static 'images/deutsch.png' %}" alt="VisaCard" width="110" height="70">
+          <div class="text-center mb-4">
+            <h5 class="mb-3">Accepted Cards</h5>
+            <img src="{% static 'images/mastercard-logo.png' %}" alt="MasterCard" class="mx-2" style="height: 60px;">
+            <img src="{% static 'images/amex-logo.avif' %}" alt="American Express" class="mx-2" style="height: 60px;">
+            <img src="{% static 'images/visacard.png' %}" alt="VisaCard" class="mx-2" style="height: 60px;">
+            <img src="{% static 'images/sparkasse.jpg' %}" alt="VisaCard" class="mx-2" style="height: 60px;">
           </div>
+
           <h5 class="mb-3">Credit Card Details</h5>
           <div class="mb-3">
             <label for="card_number" class="form-label">Card Number</label>
             <input type="text" class="form-control" id="card_number" name="card_number" placeholder="Enter your card number" required>
           </div>
-          <div class="mb-3">
-            <label for="expiry_date" class="form-label">Expiry Date</label>
-            <input type="text" class="form-control" id="expiry_date" name="expiry_date" placeholder="MM/YY" required>
-          </div>
-          <div class="mb-3">
-            <label for="cvv" class="form-label">CVV</label>
-            <input type="text" class="form-control" id="cvv" name="cvv" placeholder="Enter your CVV" required>
+          <div class="row mb-3">
+            <div class="col">
+              <label for="expiry_date" class="form-label">Expiry Date</label>
+              <input type="text" class="form-control" id="expiry_date" name="expiry_date" placeholder="MM/YY" required>
+            </div>
+            <div class="col">
+              <label for="cvv" class="form-label">CVV</label>
+              <input type="text" class="form-control" id="cvv" name="cvv" placeholder="Enter CVV" required>
+            </div>
           </div>
           <div class="mb-3">
             <label for="amount" class="form-label">Total Amount</label>
-            <input type="text" class="form-control" id="amount" name="amount" value="{{ total_amount }}" readonly>
+            <input type="text" class="form-control" id="amount" name="amount" value="€ {{ total_amount|floatformat:2 }}" readonly>
           </div>
-          <button type="submit" class="btn btn-success w-100">Confirm Payment</button>
+
+          <h5 class="mt-4">Shipment Options</h5>
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="shipping" id="dpd" checked>
+            <label class="form-check-label" for="dpd">DPD: Shipping in 2-3 working days (Free)</label>
+          </div>
+          <div class="form-check mb-4">
+            <input class="form-check-input" type="radio" name="shipping" id="dhl">
+            <label class="form-check-label" for="dhl">DHL Express: Shipping in 24-36 hours (€2.99)</label>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">Confirm Payment</button>
         </form>
-        
       </div>
     </div>
   </div>
@@ -100,25 +119,59 @@
 {% endblock content %}
 
 {% block styles %}
-
+<style>
+  .payment-section {
+    background: #c68e8e;
+    border-radius: 10px;
+  }
+  .payment-left, .payment-right {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  h5 {
+    color: #333;
+    font-weight: bold;
+  }
+  label {
+    color: #555;
+    font-weight: 500;
+  }
+  .btn-primary {
+    background: #0ba0df;
+    border: none;
+  }
+  .btn-primary:hover {
+    background: #097ca1;
+  }
+</style>
 {% endblock styles %}
 
 {% block scripts %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const section = document.querySelector(".payment-section");
+    const baseAmount = parseFloat("{{ total_amount|floatformat:2 }}");
+    const amountInput = document.getElementById("amount");
+    const shippingOptions = document.querySelectorAll('input[name="shipping"]');
 
-    function animateOnScroll() {
-      const sectionTop = section.getBoundingClientRect().top;
-      const windowHeight = window.innerHeight;
+    function updateTotal() {
+      let shippingCost = 0;
 
-      if (sectionTop < windowHeight) {
-        section.classList.add("animate");
+      if (document.getElementById("dhl").checked) {
+        shippingCost = 2.99;
+      } else if (document.getElementById("dpd").checked) {
+        shippingCost = 0;
       }
+
+      const total = baseAmount + shippingCost;
+      amountInput.value = `€ ${total.toFixed(2)}`;
     }
 
-    window.addEventListener("scroll", animateOnScroll);
-    window.addEventListener("load", animateOnScroll);
+    shippingOptions.forEach(option => {
+      option.addEventListener("change", updateTotal);
+    });
+
+    updateTotal();
   });
 </script>
 {% endblock scripts %}

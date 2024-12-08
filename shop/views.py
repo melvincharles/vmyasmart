@@ -172,6 +172,23 @@ def payment_success(request):
 def cart_view(request):
     cart = request.session.get('cart', {}) 
     return render(request, 'shop/cart.html', {'cart': cart})
+def cart_page(request):
+    if request.user.is_authenticated:
+        cart = Cart.objects.filter(user=request.user)
+        
+        # Calculate total amount before discount
+        total = sum(item.total_cost for item in cart)
+        
+        # Apply 25% discount
+        discounted_total = total * 0.75
+        
+        return render(request, "shop/cart.html", {
+            "cart": cart,
+            "total": total,
+            "discounted_total": discounted_total
+        })
+    else:
+        return redirect("/")
 
 
 from rest_framework.views import APIView

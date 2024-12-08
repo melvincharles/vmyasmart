@@ -90,14 +90,25 @@ WSGI_APPLICATION = 'syam_project.wsgi.application'
 # settings.py
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('POSTGRES_DB', 'syammart'),  # Default to your db name
+#         'USER': os.getenv('POSTGRES_USER', 'postgres'),
+#         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'Raja@123'),
+#         'HOST': 'localhost',  # The service name defined in docker-compose.yml
+#         'PORT': '5432',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB', 'mydatabase'),  # Default to your db name
-        'USER': os.getenv('POSTGRES_USER', 'myuser'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'mypassword'),
-        'HOST': 'db',  # The service name defined in docker-compose.yml
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.postgresql',  # PostgreSQL database engine
+        'NAME': 'vmyasmart',             # Replace with your database name
+        'USER': 'postgres',             # Replace with your database user
+        'PASSWORD': 'Raja@123',              # Replace with your database user's password
+        'HOST': 'localhost',                      # Or the hostname of your PostgreSQL server
+        'PORT': '5432',                           # Default PostgreSQL port
     }
 }
 
@@ -149,6 +160,13 @@ STATIC_URL = 'static/'
 MEDIA_URL='/images/'
 MEDIA_ROOT=BASE_DIR/'static'
  
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+
+
 # STATICFILES_DIRS=[
 # 	BASE_DIR/'static'
 # ]
