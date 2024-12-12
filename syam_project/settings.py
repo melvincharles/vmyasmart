@@ -80,12 +80,12 @@ WSGI_APPLICATION = 'syam_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # settings.py
 
@@ -101,16 +101,7 @@ WSGI_APPLICATION = 'syam_project.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',  # PostgreSQL database engine
-        'NAME': 'vmyasmart',             # Replace with your database name
-        'USER': 'postgres',             # Replace with your database user
-        'PASSWORD': 'Raja@123',              # Replace with your database user's password
-        'HOST': 'localhost',                      # Or the hostname of your PostgreSQL server
-        'PORT': '5432',                           # Default PostgreSQL port
-    }
-}
+
 
 
 #pip install psycopg2-binary==2.9.6
